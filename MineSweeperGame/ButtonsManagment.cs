@@ -1,5 +1,6 @@
 ﻿using MineSweeperGame.Object;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,15 +8,16 @@ namespace MineSweeperGame
 {
     internal class ButtonsManagment
     {
-        private Buttons buttons;
+        private Buttons button;
         private Form form;
         private Random random = new Random();
         private int row, col, mineCount;
-        private bool gameOver;
+        private Panel panel;
+        List<Buttons> buttons;
         int[,] bombsLoc;
         public ButtonsManagment(Form minesForm, int row, int col)
         {
-
+            panel = new Panel();
             this.row = row;
             this.col = col;
             mineCount = row * col / 4;
@@ -24,7 +26,10 @@ namespace MineSweeperGame
         public void placeTheButtons()
         {
 
+            panel.Controls.Clear();
             createBombLocation(mineCount, row, col);
+            panel.AutoSize = true;
+            buttons = new List<Buttons>();
             //while (true)
             //{
             for (int i = 0; i < row; i++)
@@ -32,19 +37,21 @@ namespace MineSweeperGame
                 for (int j = 0; j < col; j++)
                 {
 
-                    buttons = new Buttons();
-                    buttons.Top = i * buttons.Height;
-                    buttons.Left = j * buttons.Width;
-                    buttons.x = i;
-                    buttons.y = j;
-                    buttons.Text = i + "/" + j;
-                    buttons.Click += new EventHandler(this.clickButtons);
-                    form.Controls.Add(buttons);
+                    button = new Buttons();
+                    button.Top = i * button.Height;
+                    button.Left = j * button.Width;
+                    button.x = i;
+                    button.y = j;
+                    button.Text = i + "/" + j;
+                    button.Click += new EventHandler(this.clickButtons);
+                    buttons.Add(button);
+                    panel.Controls.Add(button);
 
 
                 }
 
             }
+            form.Controls.Add(panel);
             //}
 
         }
@@ -90,6 +97,10 @@ namespace MineSweeperGame
                 btn.Text = "\U0001F4A3";
                 btn.isBomb = true;
                 btn.Font = new Font(btn.Font.FontFamily, 18);
+                //buttons.ForEach(b =>
+                //{
+                //    b.Enabled = false;
+                //});
                 btn.ForeColor = Color.Black;
                 Console.WriteLine("girdi"); 
             }

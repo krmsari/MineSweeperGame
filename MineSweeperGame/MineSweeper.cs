@@ -21,7 +21,7 @@ namespace MineSweeperGame
 
         private void MineSweeper_Load(object sender, EventArgs e)
         {
-            MineSweeperFormDesign formProperties = new MineSweeperFormDesign(this,5,5);
+            MineSweeperFormDesign formProperties = new MineSweeperFormDesign(this,8,8);
             formProperties.run();
 
             
