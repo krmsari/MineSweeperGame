@@ -19,7 +19,8 @@ namespace MineSweeperGame.Object
         public int y { get; set; }
         public Buttons()
         {
-            this.isBomb= false;
+            this.isBomb = false;
+            this.Font = new Font(Font.FontFamily, 12);
             this.Width = 40;
             this.Height = 40;
             this.UseVisualStyleBackColor = true;

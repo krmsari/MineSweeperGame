@@ -16,15 +16,15 @@ namespace MineSweeperGame
         public MineSweeper()
         {
             InitializeComponent();
-            MineSweeperFormProperties formProperties = new MineSweeperFormProperties(this);
-            formProperties.formProperties();
-            ButtonsManagment buttons = new ButtonsManagment(this, 5, 5);
-            buttons.placeTheButtons();
+            
         }
 
         private void MineSweeper_Load(object sender, EventArgs e)
         {
+            MineSweeperFormDesign formProperties = new MineSweeperFormDesign(this,5,5);
+            formProperties.run();
 
+            
         }
     }
 }

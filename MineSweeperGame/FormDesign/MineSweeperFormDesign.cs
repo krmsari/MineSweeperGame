@@ -8,31 +8,40 @@ using System.Windows.Forms;
 
 namespace MineSweeperGame.FormProperties
 {
-    internal class MineSweeperFormProperties : Form
+    internal class MineSweeperFormDesign : Form
     {
         private Form form;
         private Button startButton, closeButton;
         private Label bombCount, bombText;
-
-        public MineSweeperFormProperties(Form minesForm)
+        ButtonsManagment buttonsManagment;
+        private int row;
+        private int col;
+        public MineSweeperFormDesign(Form minesForm,int row,int col)
         {
-            form = minesForm;
-        }
+            this.form = minesForm;
+            this.row = row;
+            this.col = col;
+            buttonsManagment = new ButtonsManagment(form, row, col);
 
-        public void formProperties()
+        }
+        public void run()
+        {
+            formProperties();
+            managmentButtons();
+        }
+        private void formProperties()
         {
             form.Text = "Mine Sweeper";
             form.BackColor = Color.Gray;
             form.MaximumSize = new System.Drawing.Size(500,550);
             form.MinimumSize= new System.Drawing.Size(500, 550);
-            form.Icon = new Icon("C:\\Users\\kmsri\\Source\\Repos\\krmsari\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
+            form.Icon = new Icon("D:\\Kerem\\Repository\\CSharp\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
             form.HelpButton = true;
-            form.Menu = new System.Windows.Forms.MainMenu();
-            managmentButtons();
-            displayLabels();
+            
         }
+
         // This method manage the close, restart and start buttons.
-        public void managmentButtons()
+        private void managmentButtons()
         {
             startButton = new Button();
             closeButton = new Button();
@@ -44,7 +53,7 @@ namespace MineSweeperGame.FormProperties
             startButton.Left = form.Width - 120;
             startButton.Top = 30;
             startButton.UseVisualStyleBackColor = true;
-            //startButton.Click += new EventHandler(this.clickStartButton);
+            startButton.Click += new EventHandler(this.clickStartButton);
             form.Controls.Add(startButton);
 
             closeButton.Height = 40;
@@ -54,12 +63,12 @@ namespace MineSweeperGame.FormProperties
             closeButton.Left = form.Width - 120;
             closeButton.Top = 80;
             closeButton.UseVisualStyleBackColor = true;
-            //closeButton.Click += new EventHandler(this.clickCancelButton);
+            closeButton.Click += new EventHandler(this.clickCancelButton);
             form.Controls.Add(closeButton);
 
         }
 
-        public void displayLabels()
+        private void displayLabels()
         {
             bombCount = new Label();
             bombText = new Label();
@@ -72,9 +81,39 @@ namespace MineSweeperGame.FormProperties
             bombText.Font = new Font(bombText.Font.FontFamily, 9);
             bombText.Left = form.Width - 210;
             bombText.Top = 40;
-            bombText.Text = "Bomb Count:";
+            bombText.Text = "Bomb Count: ";
             form.Controls.Add(bombCount);
             form.Controls.Add(bombText);
+        }
+
+
+
+        protected void clickStartButton(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            form.Controls.Clear();
+            //mine = 0;
+            //fieldCount = 25;
+            //minesCount = fieldCount / 4;
+            buttonsManagment.placeTheButtons();
+            displayLabels();
+            managmentButtons();
+            button.Text = "Restart";
+
+        }
+        protected void clickCancelButton(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to close this game ?", "Do you sure ?", MessageBoxButtons.YesNo);
+            if (DialogResult.Yes == result)
+            {
+                form.Close();
+
+            }
+            else if (DialogResult.No == result)
+            {
+
+            }
+
         }
 
     }
