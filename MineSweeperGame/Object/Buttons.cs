@@ -19,7 +19,7 @@ namespace MineSweeperGame.Object
         public int y { get; set; }
         public Buttons()
         {
-            this.BackColor = Color.White;
+            this.isBomb= false;
             this.Width = 40;
             this.Height = 40;
             this.UseVisualStyleBackColor = true;

@@ -25,7 +25,7 @@ namespace MineSweeperGame.FormProperties
             form.BackColor = Color.Gray;
             form.MaximumSize = new System.Drawing.Size(500,550);
             form.MinimumSize= new System.Drawing.Size(500, 550);
-            form.Icon = new Icon("D:\\Kerem\\Repository\\CSharp\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
+            form.Icon = new Icon("C:\\Users\\kmsri\\Source\\Repos\\krmsari\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
             form.HelpButton = true;
             form.Menu = new System.Windows.Forms.MainMenu();
             managmentButtons();
