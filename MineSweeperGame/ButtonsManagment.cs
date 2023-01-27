@@ -68,18 +68,19 @@ namespace MineSweeperGame
                 bombsLoc[bombRow, bombCol] = -1;
                 Console.WriteLine(mineCount + ". BOMBA:  " + bombRow + " -- " + bombCol);
 
-                for (int dx = -1; dx <= 1; dx++)
+                for (int rowDif = -1; rowDif <= 1; rowDif++)
                 {
-                    for (int dy = -1; dy <= 1; dy++)
+                    for (int columnDif = -1; columnDif <= 1; columnDif++)
                     {
-                        if (bombRow + dx < 0) continue;
-                        if (bombCol + dy < 0) continue;
-                        if (bombRow + dx >= row) continue;
-                        if (bombCol + dy >= col) continue;
+                        if (bombRow + rowDif < 0) continue;
+                        if (bombCol + columnDif < 0) continue;
+                        if (bombRow + rowDif >= row) continue;
+                        if (bombCol + columnDif >= col) continue;
 
-                        if (bombsLoc[bombRow + dx, bombCol + dy] != -1)
+                        //
+                        if (bombsLoc[bombRow + rowDif, bombCol + columnDif] != -1)
                         {
-                            bombsLoc[bombRow + dx, bombCol + dy]++;
+                            bombsLoc[bombRow + rowDif, bombCol + columnDif]++;
                         }
                     }
                 }
