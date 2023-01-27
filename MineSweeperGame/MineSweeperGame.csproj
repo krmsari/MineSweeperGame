@@ -59,6 +59,9 @@
     <Compile Include="Object\Buttons.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Object\MPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormDesign\MineSweeperFormDesign.resx">
@@ -91,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Image\bomb.ico" />
+    <Content Include="Image\tileable_grass.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,13 +13,13 @@ namespace MineSweeperGame.FormProperties
         private Buttons startButton, closeButton;
         private Label bombCount, bombText;
         ButtonsManagment buttonsManagment;
-        private int row, col;
-        private static int c = 0;
-        public MineSweeperFormDesign(Form minesForm, int row, int col)
+        private int row, col,minesCount;
+        public MineSweeperFormDesign(Form form, int row, int col)
         {
-            this.form = minesForm;
+            this.form = form;
             this.row = row;
             this.col = col;
+            minesCount = row * col / 6; ;
             buttonsManagment = new ButtonsManagment(form, row, col);
 
         }
@@ -34,7 +34,7 @@ namespace MineSweeperGame.FormProperties
             form.BackColor = Color.Gray;
             form.MaximumSize = new System.Drawing.Size(85 * row, 85 * col);
             form.MinimumSize = new System.Drawing.Size(85 * row, 85 * col);
-            form.Icon = new Icon("D:\\Kerem\\Repository\\CSharp\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
+            form.Icon = new Icon("C:\\Users\\kmsri\\source\\repos\\krmsari\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
 
         }
 
@@ -62,7 +62,7 @@ namespace MineSweeperGame.FormProperties
             closeButton.Click += new EventHandler(this.clickCancelButton);
             form.Controls.Add(closeButton);
 
-            buttonsManagment.placeTheButtons();
+            
 
 
         }
@@ -76,7 +76,7 @@ namespace MineSweeperGame.FormProperties
             bombCount.Width = 30;
             bombCount.Left = form.Width - 190;
             bombCount.Top = 55;
-            //bombCount.Text = minesCount.ToString();
+            bombCount.Text = minesCount.ToString();
 
             bombText.Font = new Font(bombText.Font.FontFamily, 9);
             bombText.Left = form.Width - 220;
@@ -96,6 +96,8 @@ namespace MineSweeperGame.FormProperties
             //minesCount = fieldCount / 4;
             displayLabels();
             managmentButtons();
+            buttonsManagment.placeTheButtons();
+
             button.Text = "Restart";
         }
         protected void clickCancelButton(object sender, EventArgs e)

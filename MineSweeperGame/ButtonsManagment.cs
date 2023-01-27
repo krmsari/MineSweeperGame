@@ -12,15 +12,15 @@ namespace MineSweeperGame
         private Form form;
         private Random random = new Random();
         private int row, col, mineCount;
-        private Panel panel;
+        private MPanel panel;
         List<Buttons> buttons;
         int[,] bombsLoc;
         public ButtonsManagment(Form minesForm, int row, int col)
         {
-            panel = new Panel();
+            panel = new MPanel();
             this.row = row;
             this.col = col;
-            mineCount = row * col / 4;
+            mineCount = row * col / 6;
             form = minesForm;
         }
         public void placeTheButtons()
@@ -28,7 +28,6 @@ namespace MineSweeperGame
 
             panel.Controls.Clear();
             createBombLocation(mineCount, row, col);
-            panel.AutoSize = true;
             buttons = new List<Buttons>();
             //while (true)
             //{
@@ -67,7 +66,7 @@ namespace MineSweeperGame
 
                 if (bombsLoc[bombRow, bombCol] == -1) continue;
                 bombsLoc[bombRow, bombCol] = -1;
-                Console.WriteLine("BOMBA:  " + bombRow + " -- " + bombCol);
+                Console.WriteLine(mineCount + ". BOMBA:  " + bombRow + " -- " + bombCol);
 
                 for (int dx = -1; dx <= 1; dx++)
                 {

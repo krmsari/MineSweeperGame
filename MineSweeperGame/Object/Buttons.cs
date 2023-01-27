@@ -10,22 +10,27 @@ namespace MineSweeperGame.Object
 {
     internal class Buttons : Button
     {
+        // This attributes specifies the x and y coordinates of the Button
         public bool isBomb { get; set; }
 
-        // This attributes specifies the x and y coordinates of the Button
+        //row locations;
         public int x { get; set; }
-        //private int[] x;
         
+        // column locations
         public int y { get; set; }
+
         public Buttons()
         {
             this.isBomb = false;
-            this.Font = new Font(Font.FontFamily, 12);
+            this.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Font = new Font(Font.FontFamily, 10);
+            this.FlatStyle = FlatStyle.Popup;
+            this.FlatAppearance.BorderSize= 1;
             this.Width = 40;
-            this.Height = 40;
+            this.Height = 40;   
             this.UseVisualStyleBackColor = true;
 
         }
-        
+
     }
 }
