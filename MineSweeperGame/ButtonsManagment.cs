@@ -58,7 +58,6 @@ namespace MineSweeperGame
         {
             bombsLoc = new int[row, col];
 
-
             while (mineCount > 0)
             {
                 int bombRow = random.Next(row);
@@ -72,16 +71,31 @@ namespace MineSweeperGame
                 {
                     for (int columnDif = -1; columnDif <= 1; columnDif++)
                     {
+                        //                                      check if in range -->
                         if (bombRow + rowDif < 0) continue;
                         if (bombCol + columnDif < 0) continue;
                         if (bombRow + rowDif >= row) continue;
                         if (bombCol + columnDif >= col) continue;
+                        //<--
 
-                        //
+                        //check bomb count in around the selected button -->
                         if (bombsLoc[bombRow + rowDif, bombCol + columnDif] != -1)
                         {
                             bombsLoc[bombRow + rowDif, bombCol + columnDif]++;
                         }
+                        //<--
+
+                        //                                      -- These comments are long version of the above --
+                        //if (bombsLoc[bombRow-1,bombCol -1])
+                        //{
+                        //    bombsLoc[bombRow + -1, bombCol + -1]++
+                        //}
+                        //if (bombsLoc[bombRow -1,bombCol + 0])
+                        //{
+                        //    bombsLoc[bombRow + -1, bombCol + 0]++
+                        //}
+                        //...
+
                     }
                 }
                 mineCount--;
