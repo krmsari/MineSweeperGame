@@ -12,27 +12,31 @@ namespace MineSweeperGame
         private Buttons button;
         private Form form;
         private Random random = new Random();
-        private int row, col, mineCount;
+        private int row, col, mineCount, enabledButton=0;
         private MPanel panel;
+        private Label scoreLabel;
         private Buttons[,] buttons;
         public bool gameOver;
         public int score;
-        private int[,] mines;
-        int[,] bombsLoc;
-        public ButtonsManagment(Form minesForm, int row, int col)
+        private int[,] mines, bombsLoc;
+
+        public ButtonsManagment(Form minesForm, int row, int col,int mineCount)
         {
 
+            panel = new MPanel();
+            scoreLabel = new Label();
             this.row = row;
             this.col = col;
-            mineCount = row * col / 6;
+            this.mineCount = mineCount;
             mines = new int[mineCount, 2];
             gameOver = true;
             form = minesForm;
         }
-        public MPanel placeTheButtons()
+        public void placeTheButtons()
         {
-            panel = new MPanel();
             panel.Controls.Clear();
+            score = 0;
+            enabledButton = 0;
             createBombLocation(mineCount, row, col);
             for (int i = 0; i < row; i++)
             {
@@ -45,6 +49,7 @@ namespace MineSweeperGame
                     button.x = i;
                     button.y = j;
                     buttons[i, j] = button;
+                    //button.Text = i + "-" + j;  
                     button.Click += new EventHandler(this.clickButtons);
 
                     panel.Controls.Add(button);
@@ -53,7 +58,7 @@ namespace MineSweeperGame
 
             }
             form.Controls.Add(panel);
-            return panel;
+
         }
         private void createBombLocation(int mineCount, int row, int col)
         {
@@ -69,6 +74,8 @@ namespace MineSweeperGame
 
                 if (bombsLoc[mines[c, 0], mines[c, 1]] == -1) continue;
                 bombsLoc[mines[c, 0], mines[c, 1]] = -1;
+                
+
                 Console.WriteLine(c + ". BOMBA:  " + mines[c, 0] + " -- " + mines[c, 1]);
 
                 for (int rowDif = -1; rowDif <= 1; rowDif++)
@@ -109,6 +116,22 @@ namespace MineSweeperGame
             }
 
         }
+        private bool win()
+        {
+            Console.WriteLine((row * col -  enabledButton));
+            if ((row * col - enabledButton) == mineCount)
+            {
+                finish();
+                scoreCal(score, "You are win.");
+                Console.WriteLine("girdi: " + (row*col-enabledButton));
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("false");
+                return false;   
+            }
+        }
         private void clickButtons(object sender, EventArgs e)
         {
             if (gameOver)
@@ -118,6 +141,7 @@ namespace MineSweeperGame
                 if (bombsLoc[btn.x, btn.y] == -1)
                 {
                     finish();
+                    scoreCal(score, "GAME OVER");
                 }
                 else
                 {
@@ -131,12 +155,16 @@ namespace MineSweeperGame
                         btn.Text = bombsLoc[btn.x, btn.y].ToString();
                         score += bombsLoc[btn.x, btn.y];
                         Console.WriteLine("score: " + score);
+                        scoreCal(score,"");
+                        btn.Enabled = false;
+                        enabledButton++;
+
                     }
 
                 }
 
-                btn.Enabled = false;
             }
+            win();
         }
 
         private void opener(int x, int y)
@@ -157,6 +185,7 @@ namespace MineSweeperGame
                 //<--
 
                 buttons[point.X, point.Y].Enabled = false;
+                enabledButton++;
                 buttons[point.X, point.Y].BackColor = Color.DimGray;
 
                 if (bombsLoc[point.X, point.Y] != 0)
@@ -164,8 +193,11 @@ namespace MineSweeperGame
                     buttons[point.X, point.Y].Text = bombsLoc[point.X, point.Y].ToString();
                     score += bombsLoc[point.X, point.Y];
                     Console.WriteLine("score: " + score);
+                    scoreCal(score, "");
                     Console.WriteLine(point.X + ", " + point.Y + " butonu sınır");
+
                 }
+
 
                 if (bombsLoc[point.X, point.Y] != 0) continue;
 
@@ -189,19 +221,29 @@ namespace MineSweeperGame
             //}
 
         }
+        public void scoreCal(int score,string text)
+        {
+
+            scoreLabel.Font = new Font(scoreLabel.Font.FontFamily, 12);
+            scoreLabel.Left = form.Width - 230;
+            scoreLabel.AutoSize = true;
+            scoreLabel.Top = 130;
+            scoreLabel.Text = "   Score: " + score.ToString() + "\n"+text;
+            panel.Controls.Add(scoreLabel);
+        }
         private void finish()
         {
+            
             for (int i = 0; i < mineCount; i++)
             {
                 buttons[mines[i, 0], mines[i, 1]].Font = new Font(buttons[mines[i, 0], mines[i, 1]].Font.FontFamily, 18);
-                buttons[mines[i, 0], mines[i, 1]].ForeColor = Color.Black;
                 buttons[mines[i, 0], mines[i, 1]].Text = "\U0001F4A3";
+                buttons[mines[i, 0], mines[i, 1]].BackColor = Color.IndianRed;
+                System.Threading.Thread.Sleep(160);
                 buttons[mines[i, 0], mines[i, 1]].Enabled = false;
                 buttons[mines[i, 0], mines[i, 1]].BackColor = Color.DimGray;
-                System.Threading.Thread.Sleep(100);
 
             }
-
             Console.WriteLine(score);
             gameOver = false;
         }

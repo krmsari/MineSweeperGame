@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MineSweeperGame.Object
 {
-    internal class MPanel : System.Windows.Forms.Panel
+    internal class MPanel : Panel
     {
         public MPanel() 
         {

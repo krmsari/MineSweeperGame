@@ -11,16 +11,16 @@ namespace MineSweeperGame.FormProperties
     {
         private Form form;
         private Buttons startButton, closeButton;
-        private Label bombCount, bombText, scoreLabel;
+        private Label bombCount, bombText;
         ButtonsManagment buttonsManagment;
-        private int row, col, minesCount;
+        private int row, col,mineCount;
         public MineSweeperFormDesign(Form form, int row, int col)
         {
             this.form = form;
             this.row = row;
             this.col = col;
-            minesCount = row * col / 6; ;
-            buttonsManagment = new ButtonsManagment(form, row, col);
+            mineCount = row * col / 8;
+            buttonsManagment = new ButtonsManagment(form, row, col,mineCount);
 
         }
         public void run()
@@ -30,16 +30,18 @@ namespace MineSweeperGame.FormProperties
         }
         private void formProperties()
         {
+            Rectangle screen = Screen.FromControl(this).Bounds;
             form.Text = "Mine Sweeper";
+            form.Location = new Point(50,screen.Height/5);
             form.BackColor = Color.Gray;
-            form.MaximumSize = new System.Drawing.Size(800, 500);
-            form.MinimumSize = new System.Drawing.Size(800, 500);
-            form.Icon = new Icon("C:\\Users\\kmsri\\source\\repos\\krmsari\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
+            form.MinimumSize = new System.Drawing.Size(800, 600);
+            form.MaximumSize = new System.Drawing.Size(900,700);
+            form.Icon = new Icon(@"C:\Users\kmsri\source\repos\krmsari\MineSweeperGame\MineSweeperGame\Image\bomb.ico");
 
         }
 
         // This method manage the close, restart and start buttons.
-        public void managmentButtons()
+        private void managmentButtons()
         {
             startButton = new Buttons();
             closeButton = new Buttons();
@@ -64,39 +66,28 @@ namespace MineSweeperGame.FormProperties
 
         }
 
-        public void displayLabels()
+        private void displayLabels()
         {
             bombCount = new Label();
             bombText = new Label();
-
-            bombCount.Font = new Font(bombCount.Font.FontFamily, 12);
+            bombCount.Font = new Font(bombCount.Font.FontFamily, 14);
             bombCount.ForeColor = Color.Red;
             bombCount.Width = 30;
-            bombCount.Left = form.Width - 190;
+            bombCount.Left = form.Width - 200;
             bombCount.Top = 55;
-            bombCount.Text = minesCount.ToString();
+            bombCount.Text = mineCount.ToString();
 
-            bombText.Font = new Font(bombText.Font.FontFamily, 9);
-            bombText.Left = form.Width - 220;
+            bombText.Font = new Font(bombText.Font.FontFamily, 11);
+            bombText.Left = form.Width - 230;
             bombText.Top = 40;
             bombText.Text = "Bomb Count: ";
             form.Controls.Add(bombCount);
             form.Controls.Add(bombText);
-
-
         }
 
-        public void score(int score)
-        {
-            scoreLabel = new Label();
-            scoreLabel.Font = new Font(scoreLabel.Font.FontFamily, 9);
-            scoreLabel.Left = form.Width - 220;
-            scoreLabel.Top = 130;
-            scoreLabel.Text += buttonsManagment.score.ToString();
-            form.Controls.Add(scoreLabel);
-        }
 
-        private void clickStartButton(object sender, EventArgs e)
+
+        protected void clickStartButton(object sender, EventArgs e)
         {
             Buttons button = sender as Buttons;
             //mine = 0;
@@ -104,14 +95,13 @@ namespace MineSweeperGame.FormProperties
             //minesCount = fieldCount / 4;
             displayLabels();
             managmentButtons();
+            buttonsManagment.scoreCal(0,"");
             buttonsManagment.gameOver = true;
-            //buttonsManagment.score = score;
-            score(buttonsManagment.score);
             buttonsManagment.placeTheButtons();
 
             button.Text = "Restart";
         }
-        private void clickCancelButton(object sender, EventArgs e)
+        protected void clickCancelButton(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Do you want to close this game ?", "Do you sure ?", MessageBoxButtons.YesNo);
             if (DialogResult.Yes == result) form.Close();
