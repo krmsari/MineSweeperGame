@@ -11,9 +11,9 @@ namespace MineSweeperGame.FormProperties
     {
         private Form form;
         private Buttons startButton, closeButton;
-        private Label bombCount, bombText;
+        private Label bombCount, bombText, scoreLabel;
         ButtonsManagment buttonsManagment;
-        private int row, col,minesCount;
+        private int row, col, minesCount;
         public MineSweeperFormDesign(Form form, int row, int col)
         {
             this.form = form;
@@ -32,14 +32,14 @@ namespace MineSweeperGame.FormProperties
         {
             form.Text = "Mine Sweeper";
             form.BackColor = Color.Gray;
-            form.MaximumSize = new System.Drawing.Size(85 * row, 85 * col);
-            form.MinimumSize = new System.Drawing.Size(85 * row, 85 * col);
-            form.Icon = new Icon("D:\\Kerem\\Repository\\CSharp\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
+            form.MaximumSize = new System.Drawing.Size(800, 500);
+            form.MinimumSize = new System.Drawing.Size(800, 500);
+            form.Icon = new Icon("C:\\Users\\kmsri\\source\\repos\\krmsari\\MineSweeperGame\\MineSweeperGame\\Image\\bomb.ico");
 
         }
 
         // This method manage the close, restart and start buttons.
-        private void managmentButtons()
+        public void managmentButtons()
         {
             startButton = new Buttons();
             closeButton = new Buttons();
@@ -62,15 +62,13 @@ namespace MineSweeperGame.FormProperties
             closeButton.Click += new EventHandler(this.clickCancelButton);
             form.Controls.Add(closeButton);
 
-            
-
-
         }
 
-        private void displayLabels()
+        public void displayLabels()
         {
             bombCount = new Label();
             bombText = new Label();
+
             bombCount.Font = new Font(bombCount.Font.FontFamily, 12);
             bombCount.ForeColor = Color.Red;
             bombCount.Width = 30;
@@ -84,11 +82,21 @@ namespace MineSweeperGame.FormProperties
             bombText.Text = "Bomb Count: ";
             form.Controls.Add(bombCount);
             form.Controls.Add(bombText);
+
+
         }
 
+        public void score(int score)
+        {
+            scoreLabel = new Label();
+            scoreLabel.Font = new Font(scoreLabel.Font.FontFamily, 9);
+            scoreLabel.Left = form.Width - 220;
+            scoreLabel.Top = 130;
+            scoreLabel.Text += buttonsManagment.score.ToString();
+            form.Controls.Add(scoreLabel);
+        }
 
-
-        protected void clickStartButton(object sender, EventArgs e)
+        private void clickStartButton(object sender, EventArgs e)
         {
             Buttons button = sender as Buttons;
             //mine = 0;
@@ -96,11 +104,14 @@ namespace MineSweeperGame.FormProperties
             //minesCount = fieldCount / 4;
             displayLabels();
             managmentButtons();
+            buttonsManagment.gameOver = true;
+            //buttonsManagment.score = score;
+            score(buttonsManagment.score);
             buttonsManagment.placeTheButtons();
 
             button.Text = "Restart";
         }
-        protected void clickCancelButton(object sender, EventArgs e)
+        private void clickCancelButton(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Do you want to close this game ?", "Do you sure ?", MessageBoxButtons.YesNo);
             if (DialogResult.Yes == result) form.Close();
