@@ -1,4 +1,5 @@
-# Mayın Tarlası Oyunu
+# <h1 align="center" > Mayın Tarlası 
+
 <div align="center">
 
 
