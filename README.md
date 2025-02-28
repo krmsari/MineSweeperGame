@@ -3,7 +3,7 @@
 <div align="center">
 
 
->  C# WinForms şablonunu kullanarak dinamik form yapısına sahip mayın tarlası oyunu yaptım. Yorum satırlarıyla anlatmaya çalıştım. En zorlandığım sorun temas eden boş butonların birbirlerini açmasıydı onu da internette bulduğum bir yöntemle **_Stack_** sınıfı kullanarak çözebildim.
+>  C# WinForms şablonunu kullanarak dinamik form yapısına sahip mayın tarlası oyunu yaptım. Yorum satırlarıyla anlatmaya çalıştım. Geliştirme sürecindeki en büyük zorluk, bitişik boş hücrelerin yığın halinde açılmasını sağlamaktı; bu sorunu, internette araştırmalarım sonucu Stack yaklaşımını temel alarak çözdüm.
 
 <a align="center"  href="https://user-images.githubusercontent.com/77582858/215291058-edde04ad-0621-4f52-84d6-f550a59e0a9a.mp4" title="Click for video">
 
